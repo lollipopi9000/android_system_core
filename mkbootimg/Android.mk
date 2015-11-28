@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := mkbootimg.c
 LOCAL_STATIC_LIBRARIES := libmincrypt
-LOCAL_CFLAGS := -Werror
+LOCAL_CFLAGS := -Werror -std=c99
 
 LOCAL_MODULE := mkbootimg
 
@@ -16,6 +16,8 @@ LOCAL_MODULE := unpackbootimg
 include $(BUILD_HOST_EXECUTABLE)
 
 include $(CLEAR_VARS)
+LOCAL_CFLAGS := -std=c99
+LOCAL_PACK_MODULE_RELOCATIONS := false
 LOCAL_SRC_FILES := mkbootimg.c
 LOCAL_STATIC_LIBRARIES := libmincrypt libcutils libc
 LOCAL_MODULE := utility_mkbootimg
@@ -28,6 +30,8 @@ LOCAL_FORCE_STATIC_EXECUTABLE := true
 include $(BUILD_EXECUTABLE)
 
 include $(CLEAR_VARS)
+LOCAL_CFLAGS := -std=c99
+LOCAL_PACK_MODULE_RELOCATIONS := false
 LOCAL_SRC_FILES := unpackbootimg.c
 LOCAL_STATIC_LIBRARIES := libcutils libc
 LOCAL_MODULE := utility_unpackbootimg
