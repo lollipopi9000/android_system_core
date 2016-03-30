@@ -209,46 +209,6 @@ void fs_config(const char *path, int dir, const char *target_out_path,
     plen = strlen(path);
 
     fd = fs_config_open(dir, target_out_path);
-    if (fd >= 0) {
-        struct fs_path_config_from_file header;
-
-        while (TEMP_FAILURE_RETRY(read(fd, &header, sizeof(header))) == sizeof(header)) {
-            char *prefix;
-            uint16_t host_len = get2LE((const uint8_t *)&header.len);
-            ssize_t len, remainder = host_len - sizeof(header);
-            if (remainder <= 0) {
-                ALOGE("%s len is corrupted", dir ? conf_dir : conf_file);
-                break;
-            }
-            prefix = calloc(1, remainder);
-            if (!prefix) {
-                ALOGE("%s out of memory", dir ? conf_dir : conf_file);
-                break;
-            }
-            if (TEMP_FAILURE_RETRY(read(fd, prefix, remainder)) != remainder) {
-                free(prefix);
-                ALOGE("%s prefix is truncated", dir ? conf_dir : conf_file);
-                break;
-            }
-            len = strnlen(prefix, remainder);
-            if (len >= remainder) { /* missing a terminating null */
-                free(prefix);
-                ALOGE("%s is corrupted", dir ? conf_dir : conf_file);
-                break;
-            }
-            if (fs_config_cmp(dir, prefix, len, path, plen)) {
-                free(prefix);
-                close(fd);
-                *uid = get2LE((const uint8_t *)&(header.uid));
-                *gid = get2LE((const uint8_t *)&(header.gid));
-                *mode = (*mode & (~07777)) | get2LE((const uint8_t *)&(header.mode));
-                *capabilities = get8LE((const uint8_t *)&(header.capabilities));
-                return;
-            }
-            free(prefix);
-        }
-        close(fd);
-    }
 
     pc = dir ? android_dirs : android_files;
     for(; pc->prefix; pc++){
