@@ -91,14 +91,14 @@ static void read_keys(const char *file, struct listnode *list)
             continue;
         }
 
-        if (!android_pubkey_decode(keybuf, ret, &key->key)) {
+/*        if (!android_pubkey_decode(keybuf, ret, &key->key)) {
             D("%s: Failed to parse key", file);
             free(key);
             continue;
         }
 
         list_add_tail(list, &key->node);
-    }
+  */  }
 
     fclose(f);
 }
