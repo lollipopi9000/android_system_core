@@ -1,11 +1,9 @@
-
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := mkbootimg
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_IS_HOST_MODULE := true
-LOCAL_CFLAGS := -Werror -std=c99
 
 LOCAL_MODULE := mkbootimg
 
@@ -13,28 +11,8 @@ include $(BUILD_PREBUILT)
 
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := unpackbootimg
-LOCAL_CFLAGS := -std=c99
-LOCAL_PACK_MODULE_RELOCATIONS := false
-LOCAL_SRC_FILES := mkbootimg.c
-LOCAL_STATIC_LIBRARIES := libmincrypt libcutils libc
-LOCAL_MODULE := utility_mkbootimg
-LOCAL_MODULE_TAGS := eng
-LOCAL_MODULE_STEM := mkbootimg
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_UNSTRIPPED_PATH := $(PRODUCT_OUT)/symbols/utilities
-LOCAL_MODULE_PATH := $(PRODUCT_OUT)/utilities
-LOCAL_FORCE_STATIC_EXECUTABLE := true
-include $(BUILD_EXECUTABLE)
 
-include $(CLEAR_VARS)
-LOCAL_CFLAGS := -std=c99
-LOCAL_PACK_MODULE_RELOCATIONS := false
-LOCAL_SRC_FILES := unpackbootimg.c
-LOCAL_STATIC_LIBRARIES := libcutils libc
-LOCAL_MODULE := utility_unpackbootimg
-LOCAL_MODULE_TAGS := eng
-LOCAL_MODULE_STEM := unpackbootimg
+LOCAL_SRC_FILES := unpackbootimg
 LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_IS_HOST_MODULE := true
 
